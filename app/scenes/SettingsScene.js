@@ -10,6 +10,7 @@ import NotificationsScene from './NotificationsScene.js';
 import FeedbackScene from './FeedbackScene.js';
 import Navbar from '../components/Navbar';
 import LaunchScene from './LaunchScene';
+import PrivacyPolicyScene from './PrivacyPolicyScene';
 import API from '../api.js';
 
 
@@ -49,7 +50,7 @@ var SettingsScene = React.createClass({
     return (
       <View style={styles.container}>
         <Navbar {...this.props} title={this.props.title} />
-        
+
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this.renderRow} />
@@ -147,6 +148,20 @@ var SettingsScene = React.createClass({
         console.log("feedbackScene", this.props);
         navigator.push ({
           component: FeedbackScene,
+          passProps: {
+            username: this.props.username,
+            email: this.props.email,
+            password: this.props.password,
+            address: this.props.address,
+            city: this.props.city,
+            property_name: this.props.property_name,
+            title: rowData,}
+        });
+        break;
+      case PRIVACY:
+        console.log("PrivacyPolicyScene", this.props);
+        navigator.push ({
+          component: PrivacyPolicyScene,
           passProps: {
             username: this.props.username,
             email: this.props.email,

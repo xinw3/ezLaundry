@@ -40,8 +40,8 @@ export default class FeedbackScene extends Component {
         if (res.message && res.message.toUpperCase() === "SUCCESS") {
           console.log('', res);
           Alert.alert(
-            'Thanks!',
-            'We have received your feedback.',
+            '',
+            'We have received your feedback. Thanks!',
             [
               {text: 'OK'}
             ]
