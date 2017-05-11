@@ -41,6 +41,7 @@ const API = {
       console.log(err);
     }
   },
+  
   resendEmail: async function(username) {
     // console.log('resendEmail API');
     try{
