@@ -4,13 +4,13 @@ import API from './api';
 
 const UTIL = {
   fetchData: async function(username, selectedTab, bottomTab, title) {
-    // console.log("fetchdata");
+    console.log("fetchdata");
 
     switch (bottomTab) {
       case 'Status':
         return await API.getMachineData(username, selectedTab)
           .then((res) => {
-            console.log(res);
+            console.log("status fetch data result", res);
             return res; // !!! probably closure
           });
       case 'Reservation':

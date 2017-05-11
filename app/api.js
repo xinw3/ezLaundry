@@ -152,7 +152,7 @@ const API = {
         })
       })
       let json = await response.json();
-      // console.log(json);
+      console.log("in quickReserve api", json);
       return json;
     } catch(err) {
       console.log(err);
