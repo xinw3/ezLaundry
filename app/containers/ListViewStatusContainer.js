@@ -79,15 +79,13 @@ export default class ListViewStatusContainer extends Component {
   };
 
   renderRow(rowData) {
-    console.log('rowData', rowData);
+    // console.log('rowData', rowData);
     var img = this.props.selectedTab === 'Washing' ? require('../img/status/Washing.png') : require('../img/status/Dryer.png');
 
     var raw_remainTime;
     //var end_time;
 
     if (rowData.end_time != null) {
-      // // TODO:Convert the end time to readable format
-      // // TODO:Check the format of remainTime_num
       var end_time = moment(rowData.end_time).tz("America/New_York").format('hh:mm A');
       // Calculate the remain time in mmss
       raw_remainTime = moment(rowData.end_time).tz("America/New_York") - moment().tz("America/New_York");
@@ -183,11 +181,11 @@ export default class ListViewStatusContainer extends Component {
   */
   async quickReserveConfirm (machine_id) {
     // const fake_access_code = '1001';
-    console.log('Now in quickReserveConfirm');
+    // console.log('Now in quickReserveConfirm');
     this.quickReserveSuccess(machine_id, function(res) {
-      console.log("quickReserveConfirm", JSON.stringify(res));
+      // console.log("quickReserveConfirm", JSON.stringify(res));
       if (!res) {
-        console.log("quickReserveConfirm", 'NULL');
+        // console.log("quickReserveConfirm", 'NULL');
         return;
       }
       // Raise another alert to confirm
