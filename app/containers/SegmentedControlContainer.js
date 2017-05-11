@@ -38,7 +38,7 @@ export default class SegmentedControlContainer extends Component {
   checkRes() {
     API.getResSchedule(this.props.username, this.state.selectedTab).done((res) => {
       // TODO: check the data format
-      console.log('SegmentedControlContainer titleToPass res', res);
+      // console.log('SegmentedControlContainer titleToPass res', res);
       if (res.length >= 1) {
         this.setState({
           titleToPass: 'Your Reservation',
@@ -60,7 +60,7 @@ export default class SegmentedControlContainer extends Component {
 
 
   callUTLfetchData() {
-    console.log("callUTLfetchData enter");
+    // console.log("callUTLfetchData enter", this.props);
     UTL.fetchData(this.props.username, "washing", this.state.bottomTab, this.state.titleToPass).done((res) => {
       this.setState({
         WashingDS: this.state.WashingDS.cloneWithRows(res),

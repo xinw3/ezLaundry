@@ -22,7 +22,7 @@ import MainScene from '../scenes/MainScene';
 
 export default class ListViewResConfirmContainer extends Component {
   constructor(props) {
-    console.log("ListViewResConfirmContainer", props);
+    // console.log("ListViewResConfirmContainer", props);
     super(props);
     //TODO: how to set reserved state
     this.state = {
@@ -33,7 +33,7 @@ export default class ListViewResConfirmContainer extends Component {
   };
 
   render() {
-    console.log("ListViewResConfirmContainer", this.props);
+    // console.log("ListViewResConfirmContainer", this.props);
     var dataSource;
     if (this.props.selectedTab === "Washing") {
       dataSource = this.props.WashingDS;
@@ -60,7 +60,7 @@ export default class ListViewResConfirmContainer extends Component {
 
   renderRow(rowData) {
     // rowData: reserve_time, display_id, access_code
-    console.log("renderRow data", rowData);
+    // console.log("renderRow data", rowData);
 
     var img = this.props.selectedTab === 'Washing' ? require('../img/status/Washing.png') : require('../img/status/Dryer.png');
     // var expire_time = moment(rowData.reserve_time, "hh:mm A").add(10, 'minutes').format('hh:mm A');
@@ -77,7 +77,7 @@ export default class ListViewResConfirmContainer extends Component {
                 <View style={[styles.textContainer, styles.centerContainer]}>
                 <Text style={[styles.text]}>{this.state.selectedTab}</Text>
                   <Text style={[styles.text, styles.available]}>{reserve_time}</Text>
-                  <Text style={[styles.text]}>Access code: {rowData.access_code ? rowData.access_code : 1001}</Text>
+                  <Text style={[styles.text]}>Access code: {this.props.access_code ? this.props.access_code : 1001}</Text>
                   <TouchableOpacity
                           style={styles.btn}
                           onPress={this.cancelRes.bind(this)}>
@@ -97,7 +97,7 @@ export default class ListViewResConfirmContainer extends Component {
     this.setState({
       reserved: false,
     });
-    console.log('cancel', this.props);
+    // console.log('cancel', this.props);
     this.props.navigator.push({
       component: MainScene,
       passProps: {

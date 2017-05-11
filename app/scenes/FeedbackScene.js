@@ -26,7 +26,7 @@ export default class FeedbackScene extends Component {
   };
 
   async sendFeedback() {
-    console.log("send feedback", this.props);
+    // console.log("send feedback", this.props);
     const { navigator } = this.props;
     const { username, feedback, email } = this.state;
     if (feedback.length < 10) {
@@ -36,9 +36,9 @@ export default class FeedbackScene extends Component {
     } else {
       try {
         let res = await API.sendFeedback(username, feedback);
-        console.log(res);
+        // console.log(res);
         if (res.message && res.message.toUpperCase() === "SUCCESS") {
-          console.log('', res);
+          // console.log('', res);
           Alert.alert(
             '',
             'We have received your feedback. Thanks!',
@@ -63,7 +63,7 @@ export default class FeedbackScene extends Component {
   }
 
   render() {
-    console.log('Feedback Scene', this.props);
+    // console.log('Feedback Scene', this.props);
     const { navigator } = this.props;
     const { username, feedback, email } = this.state;
 

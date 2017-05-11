@@ -105,10 +105,10 @@ const API = {
   getMachineData: async function(username, machine_type) {
     // original
 
-    console.log(API_URL.getMachineData);
+    // console.log(API_URL.getMachineData);
     // console.log(username);
 
-    console.log("api getMachineData json machine_type: ", machine_type);
+    // console.log("api getMachineData json machine_type: ", machine_type);
     try{
       let response = await fetch(`${API_URL.getMachineData}`, {
         method: 'POST',
@@ -122,7 +122,7 @@ const API = {
       })
       let json = await response.json();
 
-      console.log("api getMachineData json res", json.schedules);
+      // console.log("api getMachineData json res", json.schedules);
       return json.schedules;
     } catch(err) {
       console.log(err);
@@ -144,7 +144,7 @@ const API = {
 
   quickReserve: async function(username, machine_id) {
     try{
-      console.log("quickreserve api", username);
+      // console.log("quickreserve api", username);
       let response = await fetch(`${API_URL.quickReserve}`, {
         method: 'POST',
         headers: {
@@ -156,7 +156,7 @@ const API = {
         })
       })
       let json = await response.json();
-      console.log("in quickReserve api", json);
+      // console.log("in quickReserve api", json);
       return json;
     } catch(err) {
       console.log(err);
@@ -167,7 +167,7 @@ const API = {
   },
   updateUser: async function(username, new_password, address, city) {
     try{
-      console.log("new_password", new_password);
+      // console.log("new_password", new_password);
       let response = await fetch(`${API_URL.updateUser}`, {
         method: 'POST',
         headers: {
@@ -188,8 +188,8 @@ const API = {
     }
   },
   report: async function(username, report) {
-    console.log('report API', report);
-    console.log('username', username);
+    // console.log('report API', report);
+    // console.log('username', username);
     try{
       let response = await fetch(`${API_URL.report}`, {
         method: 'POST',
@@ -202,7 +202,7 @@ const API = {
         })
       })
       let json = await response.json();
-      console.log(json);
+      // console.log(json);
         return json;
     } catch(err) {
       console.log(err);
@@ -222,7 +222,7 @@ const API = {
         })
       })
       let json = await response.json();
-      console.log(json);
+      // console.log(json);
         return json;
     } catch(err) {
       console.log(err);
@@ -252,7 +252,7 @@ const API = {
 
   getAllResSchedule: async function(username, machine_type) {
     // username not required?
-    console.log('getAllResSchedule');
+    // console.log('getAllResSchedule');
     // try {
     //   let response = await fetch(`${API_URL.getAllResSchedule}`, {
     //     method: 'POST',
@@ -272,7 +272,7 @@ const API = {
     // }
 
       // change
-      console.log("API: getAllResSchedule");
+      // console.log("API: getAllResSchedule");
       // res_time: the start time all the machines are not available, date object
       let json = [
                    {'username': 'v', 'res_time': new Date("October 13, 2014 10:30:00")},
@@ -288,34 +288,35 @@ const API = {
 
   getResSchedule: async function(username, machine_type) {
     // console.log('API getResSchedule');
-    // try {
-    //   let response = await fetch(`${API_URL.getResSchedule}`, {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       username,
-    //       machine_type,
-    //     })
-    //   })
-    //   let json = await response.json();
-    //   console.log("API getResSchedule res", json);
-    //   return json;
-    // } catch(err) {
-    //   console.log(err);
-    // }
-    // return await json.schedules;
+    try {
+      let response = await fetch(`${API_URL.getResSchedule}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username,
+          machine_type,
+        })
+      })
+      let json = await response.json();
+      // console.log("API getResSchedule res", json);
+      return json;
+    } catch(err) {
+      console.log(err);
+    }
+    return await json.schedules;
 
     //NOTE: change (hardcode to show a reservation in your reservation scene)
     // res_time: the start time all the machines are not available, date object
     // TODO: need to get a reserve_time.
     // NOTE: test your reservation
-    reserve_time = 'May 9, 2017 10:30:00';
-    let json = [
-                 {'username': 'xinwang', 'reserve_time': new Date(reserve_time), 'display_id': 1, 'access_code': 1011},
-               ]
-    return await json;
+    // reserve_time = 'May 9, 2017 10:30:00';
+    // let json = [
+    //              {'username': 'xinwang', 'reserve_time': new Date(reserve_time), 'display_id': 1, 'access_code': 1011},
+    //              {'username': 'wh', 'reserve_time': new Date(reserve_time), 'display_id': 1, 'access_code': 1011},
+    //            ]
+    // return await json;
     // end change
   },
 

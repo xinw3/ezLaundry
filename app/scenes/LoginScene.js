@@ -66,7 +66,7 @@ export default class LoginScene extends Component {
       if (res.message && res.message.toUpperCase() === "SUCCESS") {
         // Store the user data
         let user = res.user;
-        console.log(res.user);
+        // console.log(res.user);
         store.setUsername(user.username);
         store.setPassword(user.password);
         store.setPropertyName(user.property_name);
@@ -94,12 +94,13 @@ export default class LoginScene extends Component {
             city: user.city,
             property_name: user.property_name,
             bottomTab: 'Status',
+            access_code: user.access_code,
           }
         })
         return;
       // Alert error messageå
       } else {
-        console.log('login', res.message);
+        // console.log('login', res.message);
         Alert.alert(
           res.message,
           '',
@@ -116,12 +117,12 @@ export default class LoginScene extends Component {
   }
 
   async resendEmail(username) {
-    console.log('resendEmail');
+    // console.log('resendEmail');
     try {
       let res = await API.resendEmail(username);
-      console.log(res);
+      // console.log(res);
       if (res.message && res.message.toUpperCase() === "SUCCESS") {
-        console.log(res);
+        // console.log(res);
         Alert.alert("An email has been sent to your registered email address to reset the password");
         return;
       // Alert error message

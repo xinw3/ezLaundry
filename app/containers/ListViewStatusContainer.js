@@ -40,7 +40,8 @@ export default class ListViewStatusContainer extends Component {
   // };
 
   callUTLfetchData() {
-    console.log("callUTLfetchData enter");
+    // console.log("callUTLfetchData enter", this.props);
+    // console.log(this.state);
     UTL.fetchData(this.props.username, "washing", this.props.bottomTab, this.props.titleToPass).done((res) => {
       this.setState({
         WashingDS: this.state.WashingDS.cloneWithRows(res),
@@ -56,8 +57,8 @@ export default class ListViewStatusContainer extends Component {
 
   render() {
 
-    console.log('status props',this.props);
-    console.log('status state', this.state);
+    // console.log('status props',this.props);
+    // console.log('status state', this.state);
     var dataSource;
     if (this.props.selectedTab === "Washing") {
       dataSource = this.state.WashingDS._dataBlob == null ? this.props.WashingDS : this.state.WashingDS;
@@ -78,7 +79,7 @@ export default class ListViewStatusContainer extends Component {
   };
 
   renderRow(rowData) {
-    console.log('rowData', rowData);
+    // console.log('rowData', rowData);
     var img = this.props.selectedTab === 'Washing' ? require('../img/status/Washing.png') : require('../img/status/Dryer.png');
 
     var remainTime_num;
@@ -99,15 +100,15 @@ export default class ListViewStatusContainer extends Component {
       var min = parseInt(rowData.end_time.substring(0,2));
       var sec = parseInt(rowData.end_time.substring(2,4));
       var end_time = moment().add(min, 'minutes').add(sec, 'seconds').format('hh:mm A');
-      console.log("rowData processed remainTime", remainTime);
-      console.log("rowData processed end_time", end_time);
+      // console.log("rowData processed remainTime", remainTime);
+      // console.log("rowData processed end_time", end_time);
       // end change
     } else {
       remainTime_num = 0;
     }
 
     if (remainTime_num > 0) {
-      console.log("rowData display in use");
+      // console.log("rowData display in use");
       // console.log("remainTime_num", remainTime_num);
       return (
           <View style={styles.container}>
@@ -132,7 +133,7 @@ export default class ListViewStatusContainer extends Component {
           </View>
       );
     } else {
-      console.log("rowData display available");
+      // console.log("rowData display available");
       return (
         <View style={styles.container}>
           <TouchableOpacity
@@ -207,6 +208,7 @@ export default class ListViewStatusContainer extends Component {
           { text: 'OK' }
         ]
       );
+
     });
   }; // end of quickReserveConfirm
 
@@ -227,15 +229,15 @@ export default class ListViewStatusContainer extends Component {
 
   async quickReserveSuccess (machine_id, callback) {
     // Call API to reserve this machine_id
-    console.log('Now in quickReserveSuccess');
+    // console.log('Now in quickReserveSuccess');
     API.quickReserve(this.props.username, machine_id).then(function(res) {
-      console.log("quickReserveSuccess", res.access_code);
+      // console.log("quickReserveSuccess", res.access_code);
       if (res.message && res.message.toUpperCase() === 'SUCCESS') {
         // Update the DS state - fetch the data again
-        console.log("quick reserve success feftch data");
+        // console.log("quick reserve success feftch data");
         var access_code = res.access_code;
-        // this.fetchData();
-        console.log("access_code", access_code);
+        // this.callUTLfetchData();
+        // console.log("access_code", access_code);
         return callback(access_code);
       } else {
         // Do nothing

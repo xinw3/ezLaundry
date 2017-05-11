@@ -28,7 +28,7 @@ export default class SignupScene extends Component {
   }
 
   async signupAction() {
-    console.log('sign up');
+    // console.log('sign up');
     const { navigator } = this.props;
     const { username, email, password, passwordconfirm, address, city} = this.state;
 
@@ -51,12 +51,12 @@ export default class SignupScene extends Component {
       Alert.alert('Passwords do not match');
       return;
     }
-    console.log('before query server', this.props);
+    // console.log('before query server', this.props);
     // Create a new user
     try {
       let res = await API.signUp(username, email, password, address, city);
       if (res.message && res.message.toUpperCase() === "SUCCESS") {
-        console.log(res);
+        // console.log(res);
         Alert.alert(
           'Please confirm your email',
           'We have sent an email to you, please check your inbox.',

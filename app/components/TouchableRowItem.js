@@ -47,8 +47,8 @@ export default class TouchableRowItem extends Component {
   } // end of render
 
   reservationConfirm(reserveTime) {
-    console.log("time", reserveTime);
-    console.log("reserve props", this.props);
+    // console.log("time", reserveTime);
+    // console.log("reserve props", this.props);
     var {username, selectedTab} = this.props;
     this.props.navigator.push({
       component: MainScene,

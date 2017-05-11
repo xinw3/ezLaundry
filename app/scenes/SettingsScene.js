@@ -46,7 +46,7 @@ var SettingsScene = React.createClass({
   },
 
   render() {
-    console.log("setting props", this.props);
+    // console.log("setting props", this.props);
     return (
       <View style={styles.container}>
         <Navbar {...this.props} title={this.props.title} />
@@ -81,7 +81,7 @@ var SettingsScene = React.createClass({
       </View>
   )},
   renderLaunchScene() {
-    console.log('press logout', this.props);
+    // console.log('press logout', this.props);
     const { navigator } = this.props;
     navigator.push ({
       component: LaunchScene,
@@ -100,13 +100,14 @@ var SettingsScene = React.createClass({
 
     switch (rowData) {
       case ACCOUNT:
-        console.log("rowData", rowData);
-        console.log("renderSettingScene", this.props);
+        // console.log("rowData", rowData);
+        // console.log("renderSettingScene", this.props);
         navigator.push ({
           component: AccountScene,
           passProps: {
             username: this.props.username,
             email: this.props.email,
+            access_code: this.props.access_code,
             password: this.props.password,
             address: this.props.address,
             city: this.props.city,
@@ -115,8 +116,8 @@ var SettingsScene = React.createClass({
         });
         break;
       case MAINTAIN:
-        console.log("rowData", rowData);
-        console.log("renderSettingScene", this.props);
+        // console.log("rowData", rowData);
+        // console.log("renderSettingScene", this.props);
         navigator.push ({
           component: MaintainScene,
           passProps: {
@@ -130,8 +131,8 @@ var SettingsScene = React.createClass({
         });
         break;
       case NOTIFICATION:
-        console.log("rowData", rowData);
-        console.log("renderSettingScene", this.props);
+        // console.log("rowData", rowData);
+        // console.log("renderSettingScene", this.props);
         navigator.push ({
           component: NotificationsScene,
           passProps: {
@@ -145,7 +146,7 @@ var SettingsScene = React.createClass({
         });
         break;
       case FEEDBACK:
-        console.log("feedbackScene", this.props);
+        // console.log("feedbackScene", this.props);
         navigator.push ({
           component: FeedbackScene,
           passProps: {
@@ -159,7 +160,7 @@ var SettingsScene = React.createClass({
         });
         break;
       case PRIVACY:
-        console.log("PrivacyPolicyScene", this.props);
+        // console.log("PrivacyPolicyScene", this.props);
         navigator.push ({
           component: PrivacyPolicyScene,
           passProps: {

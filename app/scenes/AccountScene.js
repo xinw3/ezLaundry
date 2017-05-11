@@ -55,13 +55,13 @@ export default class AccountScene extends Component {
           this.setState({
             new_password: old_password,
           });
-          console.log("old_password", old_password);
-          console.log("new_password", new_password);
+          // console.log("old_password", old_password);
+          // console.log("new_password", new_password);
         }
         let res = await API.updateUser(username, new_password, new_address, new_city);
         if (res.message && res.message.toUpperCase() === "SUCCESS") {
           // Store the user data
-          console.log(res);
+          // console.log(res);
           let user = res.user;
           store.setPassword(user.password);
           if (address != null) {
@@ -97,7 +97,7 @@ export default class AccountScene extends Component {
   render() {
     // console.log('AccountScene', this.props);
     const { navigator } = this.props;
-    const { username, email, password, address, city, property_name } = this.props;
+    const { username, email, password, address, city, property_name, access_code } = this.props;
     const { old_password, new_password, confirm_password, new_address, new_city } = this.state;
 
     return (
@@ -125,6 +125,18 @@ export default class AccountScene extends Component {
                   onChangeText={ (email) => {this.setState({email})}}
                   placeholder={ email }
                   value={ email }
+                  autoCapitalize='none'
+                  editable={false}
+                  placeholderTextColor='rgba(51,51,51,0.5)'
+                  autoCorrect={false} />
+              </View>
+
+              <View style={styles.input}>
+                <Text style={styles.label}>Access Code</Text>
+                <TextInput
+                  style={styles.textInput}
+                  placeholder={ access_code.toString() }
+                  value={ access_code.toString() }
                   autoCapitalize='none'
                   editable={false}
                   placeholderTextColor='rgba(51,51,51,0.5)'

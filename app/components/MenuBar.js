@@ -34,9 +34,9 @@ export default class MenuBar extends Component {
   }
 
   _renderContent = (component, checkRes) => {
-    console.log("menubar checkRes", checkRes);
+    // console.log("menubar checkRes", checkRes);
     var Component = component;
-    console.log('props', {...this.props});
+    // console.log('props', {...this.props});
     // console.log('state', {...this.state});
 
     // to avoid overwrite of the prop title from state undefined
@@ -54,7 +54,7 @@ export default class MenuBar extends Component {
       // check the server if this person has a reservation
       API.getResSchedule(this.props.username, "washing").done((res) => {
         // TODO: check the data format
-        console.log('SegmentedControlContainer titleToPass res', res);
+        // console.log('SegmentedControlContainer titleToPass res', res);
         if (res.length >= 1) {
           titleToPass = 'Your Reservation';
         } else {
@@ -63,7 +63,7 @@ export default class MenuBar extends Component {
       });
     }
 
-    console.log("menubar titleToPass", titleToPass);
+    // console.log("menubar titleToPass", titleToPass);
     return (
       <View style={styles.tabContent}>
         <Component {...this.props} {...this.state} title={titleDefined} titleToPass={titleToPass} />

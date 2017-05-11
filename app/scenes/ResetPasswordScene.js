@@ -41,7 +41,7 @@ export default class ResetPasswordScene extends Component {
     try {
 
       const res = await API.forgetPassword(username, email);
-      console.log('reset password', res);
+      // console.log('reset password', res);
       if (res.message && res.message.toUpperCase() === "SUCCESS") {
         // Store the user data
         Alert.alert('An email to reset your password has been sent to you!');

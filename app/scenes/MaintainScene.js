@@ -33,7 +33,7 @@ export default class MaintainScene extends Component {
     }
   };
   async report() {
-    console.log('report', this.props);
+    // console.log('report', this.props);
     const { navigator } = this.props;
     const { username, password, passwordconfirm, address, city, property_name, report } = this.state;
     if (report.length < 10) {
@@ -45,7 +45,7 @@ export default class MaintainScene extends Component {
         let res = await API.report(this.props.username, this.state.selected1 + " " + report);
         if (res.message && res.message.toUpperCase() === "SUCCESS") {
           Alert.alert("Your report is on its way");
-          console.log(res);
+          // console.log(res);
           return;
         // Alert error message
         } else {

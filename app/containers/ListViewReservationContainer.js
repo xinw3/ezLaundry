@@ -29,7 +29,7 @@ export default class ListViewReservationContainer extends Component {
   };
 
   render() {
-    console.log("ListViewReservationContainer props", this.props);
+    // console.log("ListViewReservationContainer props", this.props);
     var dataSource;
     if (this.props.selectedTab === "Washing") {
       dataSource = this.props.WashingDS;
@@ -50,7 +50,7 @@ export default class ListViewReservationContainer extends Component {
   };
 
   renderRow(rowData) {
-    console.log('res renderrow data',rowData);
+    // console.log('res renderrow data',rowData);
 
     return (
       <View>
