@@ -32,7 +32,8 @@ export default class LoginScene extends Component {
       password: this.props.password,
       address: '',
       city: '',
-      property_name: ''
+      property_name: '',
+      access_code: this.props.access_code,
     }
   }
 
@@ -65,7 +66,7 @@ export default class LoginScene extends Component {
       if (res.message && res.message.toUpperCase() === "SUCCESS") {
         // Store the user data
         let user = res.user;
-        // console.log(res.user);
+        console.log(res.user);
         store.setUsername(user.username);
         store.setPassword(user.password);
         store.setPropertyName(user.property_name);
@@ -77,6 +78,7 @@ export default class LoginScene extends Component {
           address: user.address,
           city: user.city,
           property_name: user.property_name,
+          access_code: user.access_code,
         })
 
         // Navigate to the main scene

@@ -55,12 +55,7 @@ export default class ListViewStatusContainer extends Component {
 
 
   render() {
-<<<<<<< HEAD
-    console.log(this.props);
-    // console.log("state ds", this.state.dataSource === this.props.dataSource);
-    // console.log("props ds", );
-=======
->>>>>>> 43736e83086755411669129c0a0c6948e4cc8e53
+
     console.log('status props',this.props);
     console.log('status state', this.state);
     var dataSource;
@@ -184,79 +179,71 @@ export default class ListViewStatusContainer extends Component {
         Alert.alert("Your reservation just expired!");
       }
 
-      // UTL.fetchData(this.props.username, this.props.selectedTab, this.props.bottomTab, this.props.title).done((res) => {
-      //   this.setState({
-      //     dataSource: this.state.dataSource.cloneWithRows(res),
-      //   });
-      // });
       this.callUTLfetchData();
     } else {
       // console.log("handleCountDown:\t still waiting");
       return newRemainTime;
     }
-
-    // changed
-    // if (newRemainTime === "0000") {
-    //   this.fetchData();
-    // } else {
-    //   return newRemainTime;
-    // }
   }; // handleCountDown
 
 
   /*
     Alert to confirm quickreservation
   */
-  async quickReserveConfirm(machine_id) {
-    const fake_access_code = '1001';    // TODO:
-    // Raise another alert to confirm
-    Alert.alert(
-      'Reservation Code: ' + fake_access_code,  // to be changed
-      'You have reserved this machine successfully. Please note that this reservation will expire in 10 minutes.',
-      [
-        { text: 'OK', onPress: (id) => {
-          var id = machine_id;
-          this.quickReserveFinish(id)} }
-      ]
-    );
+  async quickReserveConfirm (machine_id) {
+    // const fake_access_code = '1001';
+    console.log('Now in quickReserveConfirm');
+    this.quickReserveSuccess(machine_id, function(res) {
+      console.log("quickReserveConfirm", JSON.stringify(res));
+      if (!res) {
+        console.log("quickReserveConfirm", 'NULL');
+        return;
+      }
+      // Raise another alert to confirm
+      Alert.alert(
+        'Reservation Code: ' + res,  // to be changed
+        'You have reserved this machine successfully. Please note that this reservation will expire in 5 minutes.',
+        [
+          { text: 'OK' }
+        ]
+      );
+    });
   }; // end of quickReserveConfirm
 
-  async quickReserveFinish(machine_id) {
-    console.log("enter quickReserveFinish");
+  // async quickReserveFinish(machine_id) {
+  //   console.log("enter quickReserveFinish");
+  //   var res = await API.quickReserve(this.props.username, machine_id);
+  //
+  //   if (res.message && res.message.toUpperCase() === 'SUCCESS') {
+  //     console.log("quickReserveFinish Success");
+  //     // Update the DS state - fetch the data again
+  //     this.callUTLfetchData();
+  //   } else {
+  //     console.log("quickReserveFinish Fail");
+  //     // Do nothing
+  //     Alert.alert(res.message);
+  //   }
+  // }; // end of quickReserveSuccess
+
+  async quickReserveSuccess (machine_id, callback) {
     // Call API to reserve this machine_id
-    var res = await API.quickReserve(this.props.username, machine_id);
-    // console.log("quick reserve", res);
-    // console.log("seg props", this.props);
-    if (res.message && res.message.toUpperCase() === 'SUCCESS') {
-      console.log("quickReserveFinish Success");
-      // Update the DS state - fetch the data again
-
-      // UTL.fetchData(this.props.username, this.props.selectedTab, this.props.bottomTab, 'Your Reservation').done((res) => {
-      //   // console.log("fetched data", res);
-      //   this.setState({
-      //     dataSource: this.state.dataSource.cloneWithRows(res),
-      //   });
-      // });
-      this.callUTLfetchData();
-
-      // this.props.navigator.push({
-      // component: ListViewResConfirmContainer,
-      // passProps: {
-      //   username: this.props.username,
-      //   reserve_time: moment().format("hh:mm A"),
-      //   type: this.state.selectedTab,
-      //   title: "Your Reservation",
-      //   bottomTab: 'Reservation',
-      //   dataSource: this.props.dataSource,
-      // }
-      // });
-      // console.log("push end");
-    } else {
-      console.log("quickReserveFinish Fail");
-      // Do nothing
-      Alert.alert(res.message);
-    }
-  }; // end of quickReserveSuccess
+    console.log('Now in quickReserveSuccess');
+    API.quickReserve(this.props.username, machine_id).then(function(res) {
+      console.log("quickReserveSuccess", res.access_code);
+      if (res.message && res.message.toUpperCase() === 'SUCCESS') {
+        // Update the DS state - fetch the data again
+        console.log("quick reserve success feftch data");
+        var access_code = res.access_code;
+        // this.fetchData();
+        console.log("access_code", access_code);
+        return callback(access_code);
+      } else {
+        // Do nothing
+        Alert.alert(res.message);
+        return callback(null);
+      }
+    });
+  };
 
 }
 

@@ -41,7 +41,7 @@ const API = {
       console.log(err);
     }
   },
-  
+
   resendEmail: async function(username) {
     // console.log('resendEmail API');
     try{
@@ -107,11 +107,8 @@ const API = {
 
     console.log(API_URL.getMachineData);
     // console.log(username);
-<<<<<<< HEAD
-    console.log(machine_type);
-=======
+
     console.log("api getMachineData json machine_type: ", machine_type);
->>>>>>> 43736e83086755411669129c0a0c6948e4cc8e53
     try{
       let response = await fetch(`${API_URL.getMachineData}`, {
         method: 'POST',
@@ -124,11 +121,8 @@ const API = {
         })
       })
       let json = await response.json();
-<<<<<<< HEAD
-      console.log(json.schedules);
-=======
+
       console.log("api getMachineData json res", json.schedules);
->>>>>>> 43736e83086755411669129c0a0c6948e4cc8e53
       return json.schedules;
     } catch(err) {
       console.log(err);
@@ -150,6 +144,7 @@ const API = {
 
   quickReserve: async function(username, machine_id) {
     try{
+      console.log("quickreserve api", username);
       let response = await fetch(`${API_URL.quickReserve}`, {
         method: 'POST',
         headers: {
