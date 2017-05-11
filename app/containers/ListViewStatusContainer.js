@@ -79,35 +79,26 @@ export default class ListViewStatusContainer extends Component {
   };
 
   renderRow(rowData) {
-    // console.log('rowData', rowData);
+    console.log('rowData', rowData);
     var img = this.props.selectedTab === 'Washing' ? require('../img/status/Washing.png') : require('../img/status/Dryer.png');
 
-    var remainTime_num;
+    var raw_remainTime;
+    //var end_time;
 
     if (rowData.end_time != null) {
       // // TODO:Convert the end time to readable format
       // // TODO:Check the format of remainTime_num
-      // var end_time = moment(rowData.end_time).tz("America/New_York").format('hh:mm A');
-      // // Calculate the remain time in mmss
-      // remainTime_num = moment(rowData.end_time).tz("America/New_York") - moment().tz("America/New_York");
-      // var remainTime_formatted = moment(raw_remainTime).format('mmss');
-
-      // changed
-      remainTime_num = rowData.end_time;
-      remainTime_num = parseInt(rowData.end_time);
-      // console.log("raw remainTime: "+remainTime_num);
-      var remainTime = moment(remainTime_num).format('mmss');
-      var min = parseInt(rowData.end_time.substring(0,2));
-      var sec = parseInt(rowData.end_time.substring(2,4));
-      var end_time = moment().add(min, 'minutes').add(sec, 'seconds').format('hh:mm A');
-      // console.log("rowData processed remainTime", remainTime);
-      // console.log("rowData processed end_time", end_time);
-      // end change
+      var end_time = moment(rowData.end_time).tz("America/New_York").format('hh:mm A');
+      // Calculate the remain time in mmss
+      raw_remainTime = moment(rowData.end_time).tz("America/New_York") - moment().tz("America/New_York");
+      var remainTime = moment(raw_remainTime).format('mmss');
     } else {
-      remainTime_num = 0;
+      raw_remainTime = 0;
     }
 
-    if (remainTime_num > 0) {
+    var displayTime = raw_remainTime;
+
+    if (displayTime > 0) {
       // console.log("rowData display in use");
       // console.log("remainTime_num", remainTime_num);
       return (
@@ -119,8 +110,7 @@ export default class ListViewStatusContainer extends Component {
                 <Image style={styles.thumb} source={img} />
                 <View style={styles.textContainer}>
                   <CountDown
-                  // time = {remainTime}   //TODO:
-                  time = {rowData.end_time}   // changed
+                  time = {remainTime}   //TODO:
                   end_time = {rowData.end_time}
                   username = {rowData.username}
                   onCountDown = {

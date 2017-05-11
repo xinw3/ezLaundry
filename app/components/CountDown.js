@@ -50,20 +50,15 @@ var CountDown = React.createClass ({
 
   _countdown(){
     var timer = function () {
-      // var time = this.state.time - 1;
-      // var time = moment(this.state.time, "mmss").subtract('1', 'seconds');
-      //
-      // var displayTime = moment(time,"mmss").format('mmss');
-      //
+
       const now = moment(new Date()).tz("America/New_York");
-      //
-      // this.setState({time: time});
+
 
       if ( moment(now).isBefore(this.state.end_time) && this.state.displayTime != '0001' ) {
         // var time = this.state.time - 1;
-        var time = moment(this.state.time, "mmss").subtract('1', 'seconds');
-        var displayTime = moment(time,"mmss").format('mmss');
-        this.setState({time: time});
+        var subtracted_time = moment(this.state.time, "mmss").subtract('1', 'seconds');
+        var displayTime = moment(subtracted_time,"mmss").format('mmss');
+        this.setState({time: subtracted_time});
         this.setTimeout(timer, 1000);
         this.props.onCountDown(displayTime, this.state.end_time, this.state.username);
       } else {

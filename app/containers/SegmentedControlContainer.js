@@ -32,6 +32,7 @@ export default class SegmentedControlContainer extends Component {
     // console.log("SegmentedControlContainer didmount");
     // console.log("SegmentedControlContainer props", this.props);
     this.checkRes();
+    this.timer = setInterval(() => this.callUTLfetchData(), 1000);
   };
 
   // check the server if this person has a reservation, then fetch machine data
