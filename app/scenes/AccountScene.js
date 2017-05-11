@@ -8,6 +8,7 @@ import {
   View,
   TouchableHighlight,
   Alert,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import Button from 'apsl-react-native-button';
@@ -23,15 +24,15 @@ export default class AccountScene extends Component {
       old_password:'',
       new_password:'',
       confirm_password:'',
-      new_address:'',
       new_city: '',
+      address: '',
     }
   };
 
   async saveChange() {
     const { navigator } = this.props;
-    const { username, email, password, address, city, property_name } = this.props;
-    const { old_password, new_password, confirm_password, new_address, new_city } = this.state;
+    const { username, email, password, city, property_name } = this.props;
+    const { old_password, new_password, confirm_password, address, new_city } = this.state;
     // console.log("old password", old_password == '');  // true;
     try {
       if (old_password == '') {
@@ -47,7 +48,7 @@ export default class AccountScene extends Component {
             Alert.alert('Passwords do not match');
             return;
           }
-        } else if (new_address == '') {
+        } else if (address == '') {
             Alert.alert('Hi, seems you have nothing to update :)');
             return;
         }
@@ -58,7 +59,7 @@ export default class AccountScene extends Component {
           // console.log("old_password", old_password);
           // console.log("new_password", new_password);
         }
-        let res = await API.updateUser(username, new_password, new_address, new_city);
+        let res = await API.updateUser(username, new_password, address, new_city);
         if (res.message && res.message.toUpperCase() === "SUCCESS") {
           // Store the user data
           // console.log(res);
@@ -97,15 +98,18 @@ export default class AccountScene extends Component {
   render() {
     // console.log('AccountScene', this.props);
     const { navigator } = this.props;
-    const { username, email, password, address, city, property_name, access_code } = this.props;
-    const { old_password, new_password, confirm_password, new_address, new_city } = this.state;
+    const { username, email, password, city, property_name, access_code } = this.props;
+    const { old_password, new_password, confirm_password, address, new_city } = this.state;
 
     return (
       <View style={styles.container}>
         <Navbar title={this.props.title} leftBtn='Back' navigator={navigator} />
         <View style={styles.container}>
           <View style={styles.mainContainer}>
-            <View style={styles.inputContainer}>
+          <KeyboardAvoidingView
+            style={styles.inputContainer}
+            behavior="position">
+
               <View style={styles.input}>
                 <Text style={styles.label}>Username</Text>
                 <TextInput
@@ -186,9 +190,9 @@ export default class AccountScene extends Component {
                 <Text style={styles.label}>Address</Text>
                 <TextInput
                   style={styles.textInput}
-                  onChangeText={ (new_address) => {this.setState({new_address})}}
-                  placeholder={ new_address }
-                  value={ new_address }
+                  onChangeText={ (address) => {this.setState({address})}}
+                  placeholder={ address }
+                  value={ address }
                   autoCapitalize='none'
                   placeholderTextColor='rgba(51,51,51,0.5)'
                   autoCorrect={false} />
@@ -205,13 +209,15 @@ export default class AccountScene extends Component {
                   placeholderTextColor='rgba(51,51,51,0.5)'
                   autoCorrect={false} />
               </View>
-            </View>
 
             <Button style={styles.btn}
                     textStyle={{fontSize: 18, color: 'white', fontWeight: 'bold'}}
                     onPress={this.saveChange.bind(this)}>
               Save
             </Button>
+            <View style={{ height: 60 }} />
+            </KeyboardAvoidingView>
+
 
           </View>
         </View>

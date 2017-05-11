@@ -12,6 +12,7 @@ import {
   TouchableHighlight,
   Alert,
   Picker,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 
@@ -75,7 +76,9 @@ export default class MaintainScene extends Component {
             <Picker.Item label={label[1]} value={label[1]} />
             <Picker.Item label={label[2]} value={label[2]} />
         </Picker>
-        <View style={styles.inputContainer}>
+        <KeyboardAvoidingView
+          style={styles.inputContainer}
+          behavior="position">
           <TextInput
             style={styles.textArea}
             onChangeText={ (report) => this.setState({report})}
@@ -86,12 +89,13 @@ export default class MaintainScene extends Component {
             editable={true}
             multiline={true}
             autoCorrect={false} />
-        </View>
-        <Button style={styles.btn}
-                textStyle={{fontSize: 18, color: 'white', fontWeight: 'bold'}}
-                onPress={this.report.bind(this)}>
-          Save
-        </Button>
+          <Button style={styles.btn}
+                  textStyle={{fontSize: 18, color: 'white', fontWeight: 'bold'}}
+                  onPress={this.report.bind(this)}>
+            Save
+          </Button>
+        <View style={{ height: 60 }} />
+        </KeyboardAvoidingView>
       </View>
     );
   };

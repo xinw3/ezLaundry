@@ -57,7 +57,7 @@ export default class ListViewStatusContainer extends Component {
 
   render() {
 
-    // console.log('status props',this.props);
+    console.log('status props',this.props);
     // console.log('status state', this.state);
     var dataSource;
     if (this.props.selectedTab === "Washing") {

@@ -8,6 +8,7 @@ import {
   View,
   TouchableHighlight,
   Alert,
+  KeyboardAvoidingView
 } from 'react-native';
 
 import Button from 'apsl-react-native-button';
@@ -70,7 +71,9 @@ export default class FeedbackScene extends Component {
     return (
       <View style={styles.container}>
         <Navbar title={this.props.title} leftBtn='Back' navigator={navigator} />
-          <View style={styles.inputContainer}>
+        <KeyboardAvoidingView
+          style={styles.inputContainer}
+          behavior="position">
             <TextInput
               style={styles.textArea}
               onChangeText={ (feedback) => {this.setState({feedback})}}
@@ -81,13 +84,13 @@ export default class FeedbackScene extends Component {
               editable={true}
               multiline={true}
               autoCorrect={false} />
-          </View>
-
-          <Button style={styles.btn}
-                  textStyle={{fontSize: 18, color: 'white', fontWeight: 'bold'}}
-                  onPress={this.sendFeedback.bind(this)}>
-            Send
-          </Button>
+            <Button style={styles.btn}
+                    textStyle={{fontSize: 18, color: 'white', fontWeight: 'bold'}}
+                    onPress={this.sendFeedback.bind(this)}>
+              Send
+            </Button>
+          <View style={{ height: 60 }} />
+          </KeyboardAvoidingView>
       </View>
     );
   };
