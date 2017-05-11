@@ -14,7 +14,7 @@ const API_URL = {
     'checkOldPassword': server + 'api/check_old_password',
     'forgetPassword': server + 'api/forget_password/',
     'getAllResSchedule': server + '',
-    'getResSchedule': server + '',
+    'getResSchedule': server + 'api/show_user_schedules_type_after_now/',
 }
 
 const API = {
@@ -107,7 +107,11 @@ const API = {
 
     console.log(API_URL.getMachineData);
     // console.log(username);
+<<<<<<< HEAD
     console.log(machine_type);
+=======
+    console.log("api getMachineData json machine_type: ", machine_type);
+>>>>>>> 43736e83086755411669129c0a0c6948e4cc8e53
     try{
       let response = await fetch(`${API_URL.getMachineData}`, {
         method: 'POST',
@@ -120,7 +124,11 @@ const API = {
         })
       })
       let json = await response.json();
+<<<<<<< HEAD
       console.log(json.schedules);
+=======
+      console.log("api getMachineData json res", json.schedules);
+>>>>>>> 43736e83086755411669129c0a0c6948e4cc8e53
       return json.schedules;
     } catch(err) {
       console.log(err);
@@ -247,7 +255,7 @@ const API = {
     }
   },
 
-  getAllResSchedule: async function(username, machine_type, date) {
+  getAllResSchedule: async function(username, machine_type) {
     // username not required?
     console.log('getAllResSchedule');
     // try {
@@ -259,7 +267,6 @@ const API = {
     //     body: JSON.stringify({
     //       username,
     //       machine_type,
-    //       date,
     //     })
     //   })
     //   let json = await response.json();
@@ -284,8 +291,8 @@ const API = {
       // end change
   },
 
-  getResSchedule: async function(username, machine_type, date) {
-    console.log('getResSchedule');
+  getResSchedule: async function(username, machine_type) {
+    // console.log('API getResSchedule');
     // try {
     //   let response = await fetch(`${API_URL.getResSchedule}`, {
     //     method: 'POST',
@@ -295,31 +302,26 @@ const API = {
     //     body: JSON.stringify({
     //       username,
     //       machine_type,
-    //       date,
     //     })
     //   })
     //   let json = await response.json();
-    //   console.log(json);
+    //   console.log("API getResSchedule res", json);
     //   return json;
     // } catch(err) {
     //   console.log(err);
     // }
+    // return await json.schedules;
 
-      // change
-      console.log("API: getResSchedule");
-      // res_time: the start time all the machines are not available, date object
-      // TODO: need to get a reserve_time.
-      // NOTE: test your reservation
-      reserve_time = 'May 9, 2017 10:30:00';
-      let json = [
-                   {'username': 'v', 'reserve_time': new Date(reserve_time), 'display_id': 1, 'access_code': 1011},
-                 ]
-      return await json;
-
-      // end change
-
-      // NOTE: test reservation
-      //return await [];
+    //NOTE: change (hardcode to show a reservation in your reservation scene)
+    // res_time: the start time all the machines are not available, date object
+    // TODO: need to get a reserve_time.
+    // NOTE: test your reservation
+    reserve_time = 'May 9, 2017 10:30:00';
+    let json = [
+                 {'username': 'xinwang', 'reserve_time': new Date(reserve_time), 'display_id': 1, 'access_code': 1011},
+               ]
+    return await json;
+    // end change
   },
 
 

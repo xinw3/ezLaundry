@@ -33,7 +33,6 @@ var SettingsScene = React.createClass({
   },
 
   renderRow(rowData) {
-    console.log("setting props", this.props);
     return (
       <View style={styles.rowContainer}>
         <TouchableOpacity
@@ -47,6 +46,7 @@ var SettingsScene = React.createClass({
   },
 
   render() {
+    console.log("setting props", this.props);
     return (
       <View style={styles.container}>
         <Navbar {...this.props} title={this.props.title} />

@@ -16,26 +16,29 @@ import API from '../api';
 
 export default class SegmentedControlContainer extends Component {
   constructor(props) {
-    // console.log("SegmentedControlContainer props", props);
     super(props);
 
     this.state = {
       values: ['Washing', 'Dryer'],
       selectedTab: 'Washing',
       bottomTab: this.props.bottomTab,
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2 }),
+      WashingDS: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2 }),
+      DryerDS: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2}),
       titleToPass: 'Reservation',
     }
   };
 
-
-  componentWillMount() {
+  componentDidMount() {
     // console.log("SegmentedControlContainer didmount");
     // console.log("SegmentedControlContainer props", this.props);
-    // check the server if this person has a reservation
+    this.checkRes();
+  };
+
+  // check the server if this person has a reservation, then fetch machine data
+  checkRes() {
     API.getResSchedule(this.props.username, this.state.selectedTab).done((res) => {
       // TODO: check the data format
-      // console.log('SegmentedControlContainer titleToPass res', res);
+      console.log('SegmentedControlContainer titleToPass res', res);
       if (res.length >= 1) {
         this.setState({
           titleToPass: 'Your Reservation',
@@ -45,27 +48,40 @@ export default class SegmentedControlContainer extends Component {
           titleToPass: 'Reservation',
         });
       }
-      this.callUTLfetchData(this.state.selectedTab);
-    });
-    // console.log('SegmentedControlContainer titleToPass:', this.state.titleToPass);
-  };
 
+      this.callUTLfetchData();
 
-  callUTLfetchData(selectedTab) {
-    UTL.fetchData(this.props.username, selectedTab, this.state.bottomTab, this.state.titleToPass).done((res) => {
-      // console.log(res);
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(res),
-      });
-      // // Fetch data every 5 sec
-      // var timer = setInterval(() => UTL.fetchData(this.props.username, this.state.selectedTab, this.state.bottomTab), 5000);
-      // if (this.state.bottomTab === "Settings") {
-      //   clearInterval(timer);
-      // }
+      // fetch machine data every 5 seconds
+      // this.timer = setInterval(() => this.callUTLfetchData(), 5000);
+
     });
-    // console.log("segementedcontrol ds",this.props.dataSource);
   }
 
+
+
+  callUTLfetchData() {
+    console.log("callUTLfetchData enter");
+    UTL.fetchData(this.props.username, "washing", this.state.bottomTab, this.state.titleToPass).done((res) => {
+      this.setState({
+        WashingDS: this.state.WashingDS.cloneWithRows(res),
+      });
+    });
+    UTL.fetchData(this.props.username, "dryer", this.state.bottomTab, this.state.titleToPass).done((res) => {
+
+      this.setState({
+        DryerDS: this.state.DryerDS.cloneWithRows(res),
+      });
+    });
+  }
+
+  handleMachineChange(val) {
+    // change the selectedTab state
+    this.setState({
+      selectedTab: val
+    });
+    // check if the user has a reservation for this machine
+    this.checkRes();
+  }
 
   handleValueChange(val) {
     // change state
@@ -79,12 +95,8 @@ export default class SegmentedControlContainer extends Component {
   render() {
     // console.log("SegmentedControlContainer props", this.props);
     // console.log("SegmentedControlContainer datasource", this.state.dataSource);
-
-
-    if (!this.state.dataSource) {
-      return (
-        <View><Text>Loading</Text></View>
-      )
+    if (this.state.WashingDS == undefined || this.state.DryerDS == undefined) {
+      return <View><Text>Loading</Text></View>
     }
     else {
       return (
@@ -95,16 +107,17 @@ export default class SegmentedControlContainer extends Component {
               tintColor='#B0FFFE'
               values={this.state.values}
               selectedIndex={0}
-              onValueChange={this.handleValueChange.bind(this)}/>
+              onValueChange={this.handleMachineChange.bind(this)}/>
           </View>
           <ScrollView style={styles.listContainer}>
             <SegmentedControl {...this.props} {...this.state} title={this.state.titleToPass}/>
           </ScrollView>
         </View>
-      );
+      ); // end return
     }
-  };
-}
+
+  }; // end render
+} // end class
 
   var styles = StyleSheet.create({
     container: {

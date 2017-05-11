@@ -24,38 +24,57 @@ export default class ListViewStatusContainer extends Component {
     super(props);
 
     this.state = {
-      dataSource: this.props.dataSource,
+      WashingDS: this.props.WashingDS,
+      DryerDS: this.props.DryerDS,
     }
   };
 
-  componentDidMount() {
-
-    // console.log("ListViewStatusContainer props", this.props);
-    // check the server if this person has a reservation
-    this.callUTLfetchData();
-
-    //this.timer = setInterval(() => this.callUTLfetchData(), 5000);
-  };
+  // componentDidMount() {
+  //   // console.log("ListViewStatusContainer props", this.props);
+  //   // check the server if this person has a reservation
+  //   this.callUTLfetchData("washing");
+  //   this.callUTLfetchData("dryer");
+  //
+  //   // fetch machine data every 5 seconds
+  //   //this.timer = setInterval(() => this.callUTLfetchData(), 5000);
+  // };
 
   callUTLfetchData() {
-    UTL.fetchData(this.props.username, this.props.selectedTab, this.props.bottomTab, this.props.title).done((res) => {
-      // console.log("callUTLfetchData", res);
+    console.log("callUTLfetchData enter");
+    UTL.fetchData(this.props.username, "washing", this.props.bottomTab, this.props.titleToPass).done((res) => {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(res),
+        WashingDS: this.state.WashingDS.cloneWithRows(res),
+      });
+    });
+    UTL.fetchData(this.props.username, "dryer", this.props.bottomTab, this.props.titleToPass).done((res) => {
+      this.setState({
+        DryerDS: this.state.DryerDS.cloneWithRows(res),
       });
     });
   }
 
+
   render() {
+<<<<<<< HEAD
     console.log(this.props);
     // console.log("state ds", this.state.dataSource === this.props.dataSource);
     // console.log("props ds", );
+=======
+>>>>>>> 43736e83086755411669129c0a0c6948e4cc8e53
     console.log('status props',this.props);
+    console.log('status state', this.state);
+    var dataSource;
+    if (this.props.selectedTab === "Washing") {
+      dataSource = this.state.WashingDS._dataBlob == null ? this.props.WashingDS : this.state.WashingDS;
+    }
+    else if (this.props.selectedTab === "Dryer") {
+      dataSource = this.state.DryerDS._dataBlob == null ? this.props.DryerDS : this.state.DryerDS;
+    }
     return (
       <View style={styles.container}>
         <ScrollView style={styles.listContainer}>
           <ListView
-            dataSource = {this.state.dataSource}
+            dataSource = {dataSource}
             renderRow = {this.renderRow.bind(this)} // auto bind
           />
         </ScrollView>
@@ -64,8 +83,7 @@ export default class ListViewStatusContainer extends Component {
   };
 
   renderRow(rowData) {
-    // console.log(this.props);
-    // console.log('rowData', rowData);
+    console.log('rowData', rowData);
     var img = this.props.selectedTab === 'Washing' ? require('../img/status/Washing.png') : require('../img/status/Dryer.png');
 
     var remainTime_num;
@@ -80,17 +98,21 @@ export default class ListViewStatusContainer extends Component {
 
       // changed
       remainTime_num = rowData.end_time;
+      remainTime_num = parseInt(rowData.end_time);
       // console.log("raw remainTime: "+remainTime_num);
       var remainTime = moment(remainTime_num).format('mmss');
       var min = parseInt(rowData.end_time.substring(0,2));
       var sec = parseInt(rowData.end_time.substring(2,4));
       var end_time = moment().add(min, 'minutes').add(sec, 'seconds').format('hh:mm A');
+      console.log("rowData processed remainTime", remainTime);
+      console.log("rowData processed end_time", end_time);
       // end change
     } else {
       remainTime_num = 0;
     }
 
     if (remainTime_num > 0) {
+      console.log("rowData display in use");
       // console.log("remainTime_num", remainTime_num);
       return (
           <View style={styles.container}>
@@ -115,6 +137,7 @@ export default class ListViewStatusContainer extends Component {
           </View>
       );
     } else {
+      console.log("rowData display available");
       return (
         <View style={styles.container}>
           <TouchableOpacity
@@ -193,26 +216,28 @@ export default class ListViewStatusContainer extends Component {
       [
         { text: 'OK', onPress: (id) => {
           var id = machine_id;
-          this.quickReserveSuccess(id)} }
+          this.quickReserveFinish(id)} }
       ]
     );
   }; // end of quickReserveConfirm
 
-  async quickReserveSuccess(machine_id) {
+  async quickReserveFinish(machine_id) {
+    console.log("enter quickReserveFinish");
     // Call API to reserve this machine_id
     var res = await API.quickReserve(this.props.username, machine_id);
     // console.log("quick reserve", res);
     // console.log("seg props", this.props);
     if (res.message && res.message.toUpperCase() === 'SUCCESS') {
+      console.log("quickReserveFinish Success");
       // Update the DS state - fetch the data again
-      // console.log("quick reserve success feftch data");
 
-      UTL.fetchData(this.props.username, this.props.selectedTab, this.props.bottomTab, 'Your Reservation').done((res) => {
-        // console.log("fetched data", res);
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(res),
-        });
-      });
+      // UTL.fetchData(this.props.username, this.props.selectedTab, this.props.bottomTab, 'Your Reservation').done((res) => {
+      //   // console.log("fetched data", res);
+      //   this.setState({
+      //     dataSource: this.state.dataSource.cloneWithRows(res),
+      //   });
+      // });
+      this.callUTLfetchData();
 
       // this.props.navigator.push({
       // component: ListViewResConfirmContainer,
@@ -227,6 +252,7 @@ export default class ListViewStatusContainer extends Component {
       // });
       // console.log("push end");
     } else {
+      console.log("quickReserveFinish Fail");
       // Do nothing
       Alert.alert(res.message);
     }
